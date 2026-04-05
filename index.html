@@ -1103,228 +1103,29 @@
     to { transform: translateX(-50%); }
   }
 
-  /* POPUP */
-  .popup-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(10,6,4,0.75);
-    z-index: 9999;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
+  .marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.marquee h1 {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scrollText 10s linear infinite;
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(0%);
   }
-  .popup-overlay.show { display: flex; }
-
-  .popup-card {
-    background: var(--cream);
-    border-radius: 4px;
-    padding: 40px 36px;
-    width: 90%;
-    max-width: 420px;
-    text-align: center;
-    position: relative;
-    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  100% {
+    transform: translateX(-100%);
   }
-
-  @keyframes popIn {
-    from { opacity: 0; transform: scale(0.85) translateY(20px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  .popup-close {
-    position: absolute;
-    top: 14px; right: 18px;
-    font-size: 1.1rem;
-    color: var(--text-light);
-    cursor: pointer;
-    background: none;
-    border: none;
-    line-height: 1;
-  }
-
-  .popup-ring-wrap {
-    width: 90px; height: 90px;
-    margin: 0 auto 20px;
-    position: relative;
-  }
-
-  .popup-ring-wrap svg {
-    width: 90px; height: 90px;
-    transform: rotate(-90deg);
-  }
-
-  .ring-bg { fill: none; stroke: #e8e0d4; stroke-width: 6; }
-  .ring-fill {
-    fill: none;
-    stroke: var(--gold);
-    stroke-width: 6;
-    stroke-linecap: round;
-    stroke-dasharray: 220;
-    stroke-dashoffset: 88;
-    transition: stroke-dashoffset 1.5s ease;
-  }
-
-  .ring-pct {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 300;
-    color: var(--dark);
-  }
-
-  .popup-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: var(--dark);
-    margin-bottom: 8px;
-  }
-
-  .popup-sub {
-    font-size: 0.8rem;
-    color: var(--text-light);
-    font-weight: 300;
-    line-height: 1.8;
-    margin-bottom: 20px;
-  }
-
-  .popup-timer {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #fdf3e7;
-    border: 1px solid #f0d9a8;
-    padding: 8px 18px;
-    border-radius: 2px;
-    font-size: 0.78rem;
-    color: #7a4f10;
-    font-weight: 500;
-    margin-bottom: 22px;
-    letter-spacing: 0.05em;
-  }
-
-  .timer-pulse {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--gold-dark);
-    animation: pulse 1.2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
-  }
-
-  .popup-checklist {
-    text-align: left;
-    border: 1px solid rgba(201,169,110,0.2);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-bottom: 22px;
-  }
-
-  .check-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 11px 16px;
-    font-size: 0.78rem;
-    color: var(--text-light);
-    border-bottom: 1px solid rgba(201,169,110,0.1);
-  }
-
-  .check-item:last-child { border-bottom: none; }
-
-  .check-dot {
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .dot-done { background: #1D9E75; }
-  .dot-pending { background: #ddd; border: 1px solid #bbb; }
-  .check-done { color: var(--text); }
-
-  .popup-btn-main {
-    display: block;
-    width: 100%;
-    background: var(--gold);
-    color: var(--dark);
-    border: none;
-    padding: 14px;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-bottom: 10px;
-    text-decoration: none;
-    text-align: center;
-  }
-
-  .popup-btn-main:hover { background: var(--gold-dark); }
-
-  .popup-maybe {
-    font-size: 0.72rem;
-    color: var(--text-light);
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-family: 'Jost', sans-serif;
-    text-decoration: underline;
-    padding: 0;
-  }
+}
 </style>
 </head>
 <body>
-
-<!-- POPUP -->
-<div class="popup-overlay" id="sitePopup">
-  <div class="popup-card">
-    <button class="popup-close" onclick="closePopup()">✕</button>
-
-    <div class="popup-ring-wrap">
-      <svg viewBox="0 0 90 90">
-        <circle class="ring-bg" cx="45" cy="45" r="35"/>
-        <circle class="ring-fill" id="popupRing" cx="45" cy="45" r="35"/>
-      </svg>
-      <div class="ring-pct">60%</div>
-    </div>
-
-    <div class="popup-title">Your website is 60% ready</div>
-    <div class="popup-sub">
-      I've built the foundation of your site.<br>
-      Confirm & I'll complete it within 24 hours.
-    </div>
-
-    <div class="popup-timer">
-      <div class="timer-pulse"></div>
-      Slot reserved for &nbsp;<strong id="popupTimer">47:59</strong>
-    </div>
-
-    <div class="popup-checklist">
-      <div class="check-item check-done"><div class="check-dot dot-done"></div> Hero section — complete</div>
-      <div class="check-item check-done"><div class="check-dot dot-done"></div> About &amp; story — complete</div>
-      <div class="check-item"><div class="check-dot dot-pending"></div> Services &amp; pricing — pending</div>
-      <div class="check-item"><div class="check-dot dot-pending"></div> Gallery / portfolio — pending</div>
-      <div class="check-item"><div class="check-dot dot-pending"></div> Booking form — pending</div>
-      <div class="check-item"><div class="check-dot dot-pending"></div> Instagram feed &amp; SEO — pending</div>
-    </div>
-
-    <a href="https://wa.me/91XXXXXXXXXX?text=Hi!%20I%20want%20to%20complete%20my%20website.%20Please%20proceed!" 
-       class="popup-btn-main" target="_blank" onclick="closePopup()">
-      Yes, Complete My Website
-    </a>
-    <button class="popup-maybe" onclick="closePopup()">Maybe later</button>
-  </div>
-</div>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
@@ -1362,6 +1163,10 @@
     <h1>
       Elevating Beauty<br>with <em>Precision</em><br>& Passion
     </h1>
+    <div class="marquee">
+  <h1>This is Demo site</h1>
+</div>
+   
     <p class="hero-subtitle">Khushboo · Gujarat · Travels Worldwide</p>
     <p class="hero-desc">
       Where artistry meets elegance. Specializing in bridal and editorial makeup that transforms your most cherished moments into timeless memories.
@@ -1434,14 +1239,14 @@
 
   <div class="about-content fade-in">
     <div class="section-tag">
-      <span>About Anshu</span>
+      <span>About Khushboo</span>
     </div>
     <h2 class="section-title">The Artist Behind<br>Your <em>Perfect Look</em></h2>
     <p class="about-text">
       With a passion for precision and an eye for timeless elegance, Khushboo has established herself as one of Vadodara's most sought-after luxury makeup artists — trusted by brides across India and beyond.
     </p>
     <p class="about-text">
-      From intimate ceremonies to grand destination weddings, Anshu brings a signature touch of sophistication to every look — crafted to complement your unique features and last beautifully through your most precious moments.
+      From intimate ceremonies to grand destination weddings, Khushboo brings a signature touch of sophistication to every look — crafted to complement your unique features and last beautifully through your most precious moments.
     </p>
 
     <div class="about-features">
@@ -1524,7 +1329,7 @@
       <div class="service-num">06</div>
       <span class="service-icon">✈</span>
       <h3 class="service-title">Destination Weddings</h3>
-      <p class="service-desc">Anshu travels worldwide to be with you on your big day, wherever in the world you choose to celebrate your love story.</p>
+      <p class="service-desc">Khushboo travels worldwide to be with you on your big day, wherever in the world you choose to celebrate your love story.</p>
       <div class="service-price">Custom pricing</div>
     </div>
   </div>
@@ -1595,7 +1400,7 @@
   </div>
 
   <div style="text-align:center; margin-top:50px;" class="fade-in">
-    <a href="https://www.instagram.com/makeupartistanshu" target="_blank" class="btn-primary" style="text-decoration:none;">
+    <a href="#" target="_blank" class="btn-primary" style="text-decoration:none;">
       View Full Portfolio on Instagram
     </a>
   </div>
@@ -1611,7 +1416,7 @@
   <div class="testimonials-grid">
     <div class="testimonial-card fade-in">
       <div class="stars">★★★★★</div>
-      <p class="testimonial-text">Anshu understood exactly what I wanted — a natural, glowing look that lasted all day. She made me feel so beautiful and confident. My wedding photos are absolutely stunning!</p>
+      <p class="testimonial-text">Khushboo understood exactly what I wanted — a natural, glowing look that lasted all day. She made me feel so beautiful and confident. My wedding photos are absolutely stunning!</p>
       <div class="testimonial-author">
         <div class="testimonial-avatar">P</div>
         <div>
@@ -1693,7 +1498,7 @@
     <p style="color:rgba(255,255,255,0.3); font-size:0.75rem; letter-spacing:0.15em;">Or reach out directly</p>
     <div style="display:flex; gap:20px; justify-content:center; margin-top:16px; flex-wrap:wrap;">
       <a href="#" target="_blank" style="color:var(--gold-light); text-decoration:none; font-size:0.78rem; letter-spacing:0.15em; border-bottom:1px solid rgba(201,169,110,0.3); padding-bottom:2px;">
-        @makeupartistKhushboo
+        @makeupartistkhushboo
       </a>
       <a href="https://wa.me/91XXXXXXXXXX" style="color:var(--gold-light); text-decoration:none; font-size:0.78rem; letter-spacing:0.15em; border-bottom:1px solid rgba(201,169,110,0.3); padding-bottom:2px;">
         WhatsApp
@@ -1711,9 +1516,9 @@
         Luxury Bridal & Editorial Makeup Artist based in Vadodara, Gujarat. Available for weddings, events, and shoots worldwide. Elevating beauty with precision and passion.
       </p>
       <div class="footer-social">
-        <a href="https://www.instagram.com/makeupartistKhushboo" target="_blank" class="social-link">ig</a>
+        <a href="#" target="_blank" class="social-link">ig</a>
         <a href="https://wa.me/91XXXXXXXXXX" class="social-link">wa</a>
-        <a href="/cdn-cgi/l/email-protection#b1d0dfc2d9c4f1d4c9d0dcc1ddd49fd2dedc" class="social-link">@</a>
+        <a href="mailto:khushboo@example.com" class="social-link">@</a>
       </div>
     </div>
     <div>
@@ -1746,12 +1551,11 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p class="footer-copy">© 2025 Khushboo. All rights reserved.</p>
-    <p class="footer-copy">Designed with ♥ by <a href="#">Your Name</a></p>
+   <p>⚠ Demo Website – Not Live | Designed by Rachna Gajjar</p>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // NAV SCROLL
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
@@ -1776,41 +1580,23 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // POPUP
-  setTimeout(() => {
-    document.getElementById('sitePopup').classList.add('show');
-    // animate ring
-    setTimeout(() => {
-      document.getElementById('popupRing').style.strokeDashoffset = '88';
-    }, 300);
-  }, 2500);
-
-  function closePopup() {
-    document.getElementById('sitePopup').classList.remove('show');
-  }
-
-  // Click outside to close
-  document.getElementById('sitePopup').addEventListener('click', function(e) {
-    if (e.target === this) closePopup();
-  });
-
-  // Popup countdown timer
-  let popSecs = 47 * 60 + 59;
-  setInterval(() => {
-    popSecs--;
-    if (popSecs < 0) popSecs = 0;
-    const m = Math.floor(popSecs / 60);
-    const s = popSecs % 60;
-    const el = document.getElementById('popupTimer');
-    if (el) el.textContent = m + ':' + String(s).padStart(2,'0');
-  }, 1000);
-
   // FORM SUBMIT
   function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('.btn-submit');
-    btn.textContent = '✓ Enquiry Sent!';
-    btn.style.background = '#4CAF50';
-    btn.style.color = '#fff';
-    setTimeout(() => {
-      btn.textContent
+  e.preventDefault();
+
+  alert("This is a demo website. Contact to activate full booking system.");
+
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = 'Demo Only';
+  btn.style.background = '#ff4d4d';
+  btn.style.color = '#fff';
+
+  setTimeout(() => {
+    btn.textContent = 'Send Enquiry';
+    btn.style.background = '';
+    btn.style.color = '';
+  }, 2500);
+}
+</script>
+</body>
+</html>
